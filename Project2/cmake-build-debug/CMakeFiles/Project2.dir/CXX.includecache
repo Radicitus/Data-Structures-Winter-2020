@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/CamCam/Documents/Code/Academic/Winter 2020/ICS 46/Project2/LLQueue.hpp
+runtimeexcept.hpp
+C:/Users/CamCam/Documents/Code/Academic/Winter 2020/ICS 46/Project2/runtimeexcept.hpp
+
+C:/Users/CamCam/Documents/Code/Academic/Winter 2020/ICS 46/Project2/main.cpp
+LLQueue.hpp
+C:/Users/CamCam/Documents/Code/Academic/Winter 2020/ICS 46/Project2/LLQueue.hpp
+iostream
+-
+
+C:/Users/CamCam/Documents/Code/Academic/Winter 2020/ICS 46/Project2/runtimeexcept.hpp
+string
+-
+
