@@ -1,40 +1,17 @@
 #include "LLQueue.hpp"
+#include "proj2.hpp"
 #include <iostream>
+#include <vector>
 
 int main()
 {
-    auto* queue = new LLQueue<int>;
+    std::vector< std::vector<unsigned> > g1 = {
+            {1,2}, {0,3}, {0,3}, {1,2}
+    };
+    std::vector<unsigned> pathLengths(4);
+    std::vector<unsigned> numShortestPaths(4);
 
-    std::cout << "Queue is:" << queue->isEmpty() << std::endl;
-
-//    queue->dequeue();
-
-    queue->enqueue(69);
-    std::cout << queue->front() << std::endl;
-    std::cout << "Queue size is:" << queue->size() << std::endl;
-    queue->enqueue(420);
-    std::cout << queue->front() << std::endl;
-    std::cout << "Queue size is:" << queue->size() << std::endl;
-    queue->enqueue(42069);
-    std::cout << queue->front() << std::endl;
-    std::cout << "Queue size is:" << queue->size() << std::endl;
-
-    std::cout << "Queue is:" << queue->isEmpty() << std::endl;
-
-    queue->dequeue();
-    std::cout << queue->front() << std::endl;
-    std::cout << "Queue size is:" << queue->size() << std::endl;
-    queue->dequeue();
-    std::cout << queue->front() << std::endl;
-    std::cout << "Queue size is:" << queue->size() << std::endl;
-    queue->dequeue();
-    std::cout << queue->front() << std::endl;
-    std::cout << "Queue size is:" << queue->size() << std::endl;
-
-    std::cout << queue->front() << std::endl;
-
-    std::cout << "Queue is:" << queue->isEmpty() << std::endl;
-
+    countPaths(g1, 0, pathLengths, numShortestPaths);
     return 0;
 }
 

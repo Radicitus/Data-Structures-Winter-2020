@@ -7,7 +7,7 @@
 class QueueEmptyException : public RuntimeException 
 {
 public:
-	QueueEmptyException(const std::string & err) : RuntimeException(err) {}
+	explicit QueueEmptyException(const std::string & err) : RuntimeException(err) {}
 };
 
 //Node struct
@@ -28,10 +28,10 @@ public:
 	~LLQueue();
 	size_t size() const noexcept;
 	bool isEmpty() const noexcept;
-	Object & front() throw(QueueEmptyException);
-	const Object & front() const throw(QueueEmptyException);
+	Object & front() noexcept(false);
+	const Object & front() const noexcept(false);
 	void enqueue(const Object & elem);
-	void dequeue() throw(QueueEmptyException);
+	void dequeue() noexcept(false);
 };
 
 template<typename Object>
@@ -70,7 +70,7 @@ void LLQueue<Object>::enqueue(const Object &elem) {
 }
 
 template<typename Object>
-void LLQueue<Object>::dequeue() throw(QueueEmptyException) {
+void LLQueue<Object>::dequeue() noexcept(false) {
     if (isEmpty()) {
         throw QueueEmptyException("Cannot dequeue an empty queue.");
     }
@@ -86,7 +86,7 @@ size_t LLQueue<Object>::size() const noexcept {
 }
 
 template<typename Object>
-Object &LLQueue<Object>::front() throw(QueueEmptyException) {
+Object &LLQueue<Object>::front() noexcept(false) {
     if (isEmpty()) {
         throw QueueEmptyException("Cannot return a value from an empty queue.");
     }
@@ -94,7 +94,7 @@ Object &LLQueue<Object>::front() throw(QueueEmptyException) {
 }
 
 template<typename Object>
-const Object &LLQueue<Object>::front() const throw(QueueEmptyException) {
+const Object &LLQueue<Object>::front() const noexcept(false) {
     if (isEmpty()) {
         throw QueueEmptyException("Cannot return a value from an empty queue.");
     }
