@@ -7,28 +7,28 @@
 void countPaths(const std::vector< std::vector<unsigned> > & friends, unsigned start, std::vector<unsigned> & pathLengths, std::vector<unsigned> & numShortestPaths)
 {
     auto* queue = new LLQueue<int>;
-    bool visited[friends.size()];
-    int level = 1;
+    std::vector<bool> visited(friends.size(), false);
 
     pathLengths[start] = 0;
     numShortestPaths[start] = 1;
     queue->enqueue(start);
+
+    visited[start] = true;
+
     while (!queue->isEmpty()) {
-        if (!visited[queue->front()]) {
-            for (const auto i : friends[queue->front()]) {
-                if (!visited[i]) {
-                    queue->enqueue(i);
-                    if (pathLengths[i] < level || pathLengths[i] == 0) {
-                        pathLengths[i] = level;
-                    }
+        for (const auto i : friends[queue->front()]) {
+            if (!visited[i]) {
+                pathLengths[i] = pathLengths[queue->front()] + 1;
+                numShortestPaths[i] = numShortestPaths[queue->front()];
+                queue->enqueue(i);
+                visited[i] = true;
+            } else {
+                if (pathLengths[i] == pathLengths[queue->front()] + 1) {
                     numShortestPaths[i]++;
                 }
             }
-            visited[queue->front()] = true;
-            queue->dequeue();
-        } else {
-            queue->dequeue();
         }
+        queue->dequeue();
     }
     delete queue;
 }
