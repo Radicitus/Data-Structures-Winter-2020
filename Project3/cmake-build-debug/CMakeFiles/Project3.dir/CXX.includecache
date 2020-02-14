@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+/mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/Wordset.cpp
+Wordset.hpp
+/mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/Wordset.hpp
+string
+-
+cmath
+-
+
 /mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/Wordset.hpp
 string
 -
@@ -25,6 +33,22 @@ proj3.hpp
 /mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/proj3.hpp
 Wordset.hpp
 /mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/Wordset.hpp
+
+/mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/proj3.cpp
+proj3.hpp
+/mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/proj3.hpp
+Wordset.hpp
+/mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/Wordset.hpp
+iostream
+-
+sstream
+-
+queue
+-
+map
+-
+stack
+-
 
 /mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/proj3.hpp
 string
