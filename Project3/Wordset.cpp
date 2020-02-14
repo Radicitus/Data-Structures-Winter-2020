@@ -11,10 +11,10 @@ const double LOAD_LIMIT = 0.25;
 int hashFunction(std::string s, int base, int mod)
 {
     int stringSum = 0;
-    for (int i = s.length() - 1; i >= 0; --i) {
-        stringSum += (s[i] - 'a') * int(pow(base, i));
+    for (int i = 0; i < s.length(); ++i) {
+        stringSum += (s[i] - 'a') * int(pow(base, s.length() - (i + 1)));
     }
-    return stringSum % mod;
+    return abs(stringSum % mod);
 }
 
 WordSet::WordSet()
@@ -27,12 +27,16 @@ WordSet::~WordSet()
 
 void WordSet::insert(std::string s)
 {
-    if ((entries + 1) / double(SIZES[bucketSize]) >= LOAD_LIMIT) {rehash();}
+    if ((entries + 1) / double(SIZES[bucketSize]) >= LOAD_LIMIT) {
+        rehash();
+    }
 
-    bucket[probe(s, BASE_TO_USE, SIZES[bucketSize], bucket)] = s;
+    int hashCode = probe(s, BASE_TO_USE, SIZES[bucketSize], bucket);
 
-
-
+    if (bucket[hashCode].empty()) {
+        entries++;
+        bucket[probe(s, BASE_TO_USE, SIZES[bucketSize], bucket)] = s;
+    }
 }
 
 bool WordSet::contains(std::string s) const
@@ -57,7 +61,9 @@ void WordSet::rehash() {
     bucketSize++;
     auto * tempBucket = new std::string[SIZES[bucketSize]];
     for (int i = 0; i < SIZES[bucketSize - 1]; ++i) {
-        if (bucket[i].empty()) { continue;} //Skip over the loop if the value is empty string
+        if (bucket[i].empty()) {  //Skip over the loop if the value is empty string
+            continue;
+        }
         tempBucket[probe(bucket[i], BASE_TO_USE, SIZES[bucketSize], tempBucket)] = bucket[i];
     }
     delete[] bucket;
@@ -68,7 +74,7 @@ int WordSet::probe(std::string & string, int base, int size, std::string * b) {
 
     unsigned int probeCounter = 0;
     int hashCode = hashFunction(string, base, size);
-    while (!b[hashCode].empty() || b[hashCode] != string) {
+    while (!b[hashCode].empty() && b[hashCode] != string) {
         hashCode = (hashCode + int(pow(probeCounter, 2))) % size;
         probeCounter++;
     }
