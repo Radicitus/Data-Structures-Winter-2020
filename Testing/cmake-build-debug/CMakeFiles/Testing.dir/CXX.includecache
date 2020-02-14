@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Testing/main.cpp
+iostream
+-
+cmath
+-
+
