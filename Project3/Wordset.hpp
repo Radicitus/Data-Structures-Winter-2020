@@ -48,6 +48,11 @@ public:
 
 private:
 	// You may declare private functions and member variables here.
+    int entries = 0; //Init number of bucket entries
+    int bucketSize = 0; //Init current size of bucket
+    std::string * bucket = new std::string[SIZES[0]]; //Init bucket with first size
+    void rehash();
+    static int probe(std::string & string, int base, int size, std::string * b);
 };
 
 
