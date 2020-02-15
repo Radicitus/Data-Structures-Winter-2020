@@ -24,7 +24,6 @@ void loadWordsIntoTable(WordSet & words, std::istream & in)
 
 }
 
-
 std::stringstream toString(const std::string& s1, const std::string& s2, std::map<std::string, std::string> & trail) {
     std::stringstream stringTrail;
     std::stack<std::string> flip;
@@ -36,7 +35,6 @@ std::stringstream toString(const std::string& s1, const std::string& s2, std::ma
         key = trail.at(key);
        
     }
-
 
     stringTrail << s1 << " --> ";
     int flipSize = flip.size();
@@ -50,14 +48,11 @@ std::stringstream toString(const std::string& s1, const std::string& s2, std::ma
     return stringTrail;
 }
 
-// You probably want to change this function.
 std::string convert(std::string s1, std::string s2, const WordSet & words)
 {
     std::map <std::string, std::string> stringTrail;
     std::queue <std::string> breadthSearch;
     breadthSearch.push(s1);
-
-    //if (!words.contains(s2)) {return s1;}
 
     while (!breadthSearch.empty()) {
 
