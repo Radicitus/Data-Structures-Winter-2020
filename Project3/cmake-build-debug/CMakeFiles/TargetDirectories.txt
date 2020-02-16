@@ -1,3 +1,0 @@
-/mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/cmake-build-debug/CMakeFiles/Project3.dir
-/mnt/c/Users/CamCam/OneDrive/Documents/Code/Academic/Winter 2020/ICS 46/Project3/cmake-build-debug/CMakeFiles/edit_cache.dir
