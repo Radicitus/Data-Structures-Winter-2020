@@ -11,16 +11,29 @@ public:
 	ElementNotFoundException(const std::string & err) : RuntimeException(err) {}
 };
 
+template <typename Key, typename Value>
+struct avlNode{
+    Key k;
+    Value v;
+    struct avlNode<Key,Value> * right = nullptr;
+    struct avlNode<Key,Value> * left = nullptr;
+};
 
 template<typename Key, typename Value>
 class MyAVLTree
 {
 private:
+
+    avlNode<Key,Value> * head;
+    int s;
+
 	// fill in private member data here
 	// If you need to declare private functions, do so here too.
 
 public:
 	MyAVLTree();
+
+
 
 	// In general, a copy constructor and assignment operator
 	// are good things to have.
@@ -31,9 +44,7 @@ public:
 
 	// The destructor is, however, required. 
 	~MyAVLTree()
-	{
-		// TODO
-	}
+	= default;
 
 	// size() returns the number of distinct keys in the tree.
 	size_t size() const noexcept;
@@ -78,15 +89,15 @@ public:
 
 
 template<typename Key, typename Value>
-MyAVLTree<Key,Value>::MyAVLTree()
-{
-
+MyAVLTree<Key,Value>::MyAVLTree() {
+    head = nullptr;
+    s = 0;
 }
 
 template<typename Key, typename Value>
 size_t MyAVLTree<Key, Value>::size() const noexcept
 {
-	return 0; // stub
+	return s;
 }
 
 template<typename Key, typename Value>
@@ -99,7 +110,16 @@ bool MyAVLTree<Key, Value>::isEmpty() const noexcept
 template<typename Key, typename Value>
 bool MyAVLTree<Key, Value>::contains(const Key &k) const
 {
-	return false; // stub
+	avlNode<Key,Value> * currentNode = head;
+    while(true) {
+        if(currentNode == nullptr) { return false; }
+        if (currentNode->k == k) { return true; }
+        if (currentNode->k > k) {
+                currentNode = currentNode->left;
+        } else {
+                currentNode = currentNode->right;
+        }
+    }
 }
 
 
@@ -121,10 +141,40 @@ const Value & MyAVLTree<Key, Value>::find(const Key & k) const
 template<typename Key, typename Value>
 void MyAVLTree<Key, Value>::insert(const Key & k, const Value & v)
 {
-	return; 	
+	avlNode<Key,Value> * currentNode = head;
+	auto * nodeToAdd = new avlNode<Key, Value>;
+	nodeToAdd->k = k;
+	nodeToAdd->v = v;
+
+	if (head == nullptr) {
+        head = nodeToAdd;
+        s++;
+        return;
+    }
+	while(true) {
+
+	    if (currentNode->k == k) {
+	        currentNode->v = v;
+	        return;
+	    } else if (currentNode->k > k) {
+	        if (currentNode->left == nullptr) {
+	            currentNode->left = nodeToAdd;
+                s++;
+	            return;
+	        } else {
+	            currentNode = currentNode->left;
+	        }
+	    } else {
+	        if (currentNode->right == nullptr) {
+	            currentNode->right = nodeToAdd;
+                s++;
+	            return;
+	        } else {
+	            currentNode = currentNode->right;
+	        }
+	    }
+	}
 }
-
-
 
 
 template<typename Key, typename Value>

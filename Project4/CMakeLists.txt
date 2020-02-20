@@ -3,4 +3,11 @@ project(Project4)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Project4 main.cpp)
+include_directories(.)
+
+add_executable(Project4
+        main.cpp
+        MyAVLTree.hpp
+        proj4.cpp
+        proj4.hpp
+        runtimeexcept.hpp)
