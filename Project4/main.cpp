@@ -5,14 +5,16 @@
 
 int main()
 {
-    MyAVLTree<int, std::string> tree;
-    tree.insert(5, "foo");
-    tree.insert(3, "sna");
-    tree.insert(10, "bar");
-    tree.insert(12, "twelve");
-    tree.insert(15, "fifteen");
+    MyAVLTree<int, int> tree;
+    tree.insert(5, 5);
+    tree.insert(3, 3);
+    tree.insert(10, 10);
+    tree.insert(12, 12);
+    tree.insert(15, 15);
+    tree.insert(1, 1);
 
-    int test = tree.size();
+    tree.preOrder(tree.head);
+
 
     return 0;
 }

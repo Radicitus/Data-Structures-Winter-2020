@@ -15,8 +15,10 @@ template <typename Key, typename Value>
 struct avlNode{
     Key k;
     Value v;
-    struct avlNode<Key,Value> * right = nullptr;
-    struct avlNode<Key,Value> * left = nullptr;
+    unsigned int height = 0;
+    struct avlNode<Key,Value> * parent = NULL;
+    struct avlNode<Key,Value> * right = NULL;
+    struct avlNode<Key,Value> * left = NULL;
 };
 
 template<typename Key, typename Value>
@@ -24,17 +26,13 @@ class MyAVLTree
 {
 private:
 
-    avlNode<Key,Value> * head;
     int s;
-
 	// fill in private member data here
 	// If you need to declare private functions, do so here too.
 
 public:
 	MyAVLTree();
-
-
-
+    avlNode<Key,Value> * head;
 	// In general, a copy constructor and assignment operator
 	// are good things to have.
 	// For this quarter, I am not requiring these. 
@@ -43,8 +41,9 @@ public:
 
 
 	// The destructor is, however, required. 
-	~MyAVLTree()
-	= default;
+	~MyAVLTree() {
+	    avlNode<Key,Value> * currentNode = head;
+	}
 
 	// size() returns the number of distinct keys in the tree.
 	size_t size() const noexcept;
@@ -71,18 +70,12 @@ public:
 	// the grading script will deal with this situation)
 	void insert(const Key & k, const Value & v);
 
-	// in general, a "remove" function would be here
-	// It's a little trickier with an AVL tree
-	// and I am not requiring it for this quarter's ICS 46.
-	// You should still read about the remove operation
-	// in your textbook. 
-
 	// The following three functions all return
 	// the set of keys in the tree as a standard vector.
 	// Each returns them in a different order.
-	std::vector<Key> inOrder() const;
-	std::vector<Key> preOrder() const;
-	std::vector<Key> postOrder() const;
+	std::vector<Key> inOrder(avlNode<Key,Value> * node) const;
+	std::vector<Key> preOrder(avlNode<Key,Value> * node) const;
+	std::vector<Key> postOrder(avlNode<Key,Value> * node) const;
 
 
 };
@@ -90,7 +83,7 @@ public:
 
 template<typename Key, typename Value>
 MyAVLTree<Key,Value>::MyAVLTree() {
-    head = nullptr;
+    head = NULL;
     s = 0;
 }
 
@@ -103,7 +96,7 @@ size_t MyAVLTree<Key, Value>::size() const noexcept
 template<typename Key, typename Value>
 bool MyAVLTree<Key, Value>::isEmpty() const noexcept
 {
-	return true; // stub
+    return size() == 0;
 }
 
 
@@ -112,7 +105,7 @@ bool MyAVLTree<Key, Value>::contains(const Key &k) const
 {
 	avlNode<Key,Value> * currentNode = head;
     while(true) {
-        if(currentNode == nullptr) { return false; }
+        if(currentNode == NULL) { return false; }
         if (currentNode->k == k) { return true; }
         if (currentNode->k > k) {
                 currentNode = currentNode->left;
@@ -146,7 +139,7 @@ void MyAVLTree<Key, Value>::insert(const Key & k, const Value & v)
 	nodeToAdd->k = k;
 	nodeToAdd->v = v;
 
-	if (head == nullptr) {
+	if (head == NULL) {
         head = nodeToAdd;
         s++;
         return;
@@ -157,7 +150,7 @@ void MyAVLTree<Key, Value>::insert(const Key & k, const Value & v)
 	        currentNode->v = v;
 	        return;
 	    } else if (currentNode->k > k) {
-	        if (currentNode->left == nullptr) {
+	        if (currentNode->left == NULL) {
 	            currentNode->left = nodeToAdd;
                 s++;
 	            return;
@@ -165,7 +158,7 @@ void MyAVLTree<Key, Value>::insert(const Key & k, const Value & v)
 	            currentNode = currentNode->left;
 	        }
 	    } else {
-	        if (currentNode->right == nullptr) {
+	        if (currentNode->right == NULL) {
 	            currentNode->right = nodeToAdd;
                 s++;
 	            return;
@@ -178,26 +171,80 @@ void MyAVLTree<Key, Value>::insert(const Key & k, const Value & v)
 
 
 template<typename Key, typename Value>
-std::vector<Key> MyAVLTree<Key, Value>::inOrder() const
+std::vector<Key> MyAVLTree<Key, Value>::inOrder(avlNode<Key,Value> * node) const
 {
-	std::vector<Key> foo;
-	return foo; 
+	std::vector<Key> v;
+
+	if (node == NULL) { return v; }
+
+	std::vector<Key> recV;
+
+    if (node->left != NULL) {
+        recV = MyAVLTree::inOrder(node->left);
+        v.insert(std::end(v), std::begin(recV), std::end(recV));
+    }
+
+    v.push_back(node->k);
+
+    if (node->right != NULL) {
+        recV = MyAVLTree::inOrder(node->right);
+        v.insert(std::end(v), std::begin(recV), std::end(recV));
+    }
+
+    return v;
+
 }
 
 
 template<typename Key, typename Value>
-std::vector<Key> MyAVLTree<Key, Value>::preOrder() const
+std::vector<Key> MyAVLTree<Key, Value>::preOrder(avlNode<Key,Value> * node) const
 {
-	std::vector<Key> foo;
-	return foo; 
+    std::vector<Key> v;
+
+    if (node == NULL) { return v; }
+
+    v.push_back(node->k);
+
+    std::vector<Key> recV;
+
+    if (node->left != NULL) {
+        recV = MyAVLTree::inOrder(node->left);
+        v.insert(std::end(v), std::begin(recV), std::end(recV));
+    }
+
+    if (node->right != NULL) {
+        recV = MyAVLTree::inOrder(node->right);
+        v.insert(std::end(v), std::begin(recV), std::end(recV));
+    }
+
+    return v;
+
 }
 
 
 template<typename Key, typename Value>
-std::vector<Key> MyAVLTree<Key, Value>::postOrder() const
+std::vector<Key> MyAVLTree<Key, Value>::postOrder(avlNode<Key,Value> * node) const
 {
-	std::vector<Key> foo;
-	return foo; 
+    std::vector<Key> v;
+
+    if (node == NULL) { return v; }
+
+    std::vector<Key> recV;
+
+    if (node->left != NULL) {
+        recV = MyAVLTree::inOrder(node->left);
+        v.insert(std::end(v), std::begin(recV), std::end(recV));
+    }
+
+    if (node->right != NULL) {
+        recV = MyAVLTree::inOrder(node->right);
+        v.insert(std::end(v), std::begin(recV), std::end(recV));
+    }
+
+    v.push_back(node->k);
+
+    return v;
+
 }
 
 
